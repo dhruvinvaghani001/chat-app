@@ -48,17 +48,29 @@ export const loginUser = async (req, res) => {
   }
 
   const user = await User.findOne({ email });
+
   if (!user) {
-    return res.json({ error: "User Not Found!" });
+    return res.status(404).json({ error: "User Not Found!" });
   }
 
-  const passCheck = await user.isPasswordCorrect("123456789");
+  const passCheck = await user.isPasswordCorrect(password);
+  console.log("pascheck" + passCheck);
 
-  if (passCheck) {
-    return res.json({ error: "PassWord is invalid!" });
+  if (!passCheck) {
+    return res.status(400).json({ error: "PassWord is Invalid !" });
   }
+  const token = user.genrateToken();
+  console.log("token" + token);
+  res.cookie("token", token);
 
-  return res.json({ dat: "hello" });
+  return res.status(200).json({ user });
 };
 
-export const logout = async (req, res) => {};
+export const logout = async (req, res) => {
+  try {
+    res.cookie("token", "");
+    return res.status(200).json({ message: "logout successfully !" });
+  } catch (error) {
+    console.log("eror while logout", error);
+  }
+};
