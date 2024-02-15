@@ -74,3 +74,18 @@ export const logout = async (req, res) => {
     console.log("eror while logout", error);
   }
 };
+
+export const getAllusers = async (req, res) => {
+  try {
+    const userid = req.user._id;
+
+    const filteredUsers = await User.find({ _id: { $ne: userid } }).select(
+      "-password"
+    );
+
+    res.status(200).json(filteredUsers);
+  } catch (error) {
+    console.log("error while getting all user:", error);
+    res.status(500).json({ error: "intenal server error!" });
+  }
+};
