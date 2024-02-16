@@ -3,6 +3,12 @@
 @tailwind utilities;
 
 body {
+    /* background: linear-gradient(267deg, rgba(2,0,36,1) 0%, rgba(0,0,0,1) 5%, rgba(8,8,8,0.6502976190476191) 47%, rgba(0,0,0,1) 64%, rgba(0,0,0,1) 91%, rgba(0,0,0,1) 100%) url("../public/bg (2).jpg") no-repeat ;; */
+    background: linear-gradient(rgba(0, 0, 255, 0.2), rgba(0, 0, 255, 0.2)), url("../public/bg (2).jpg") no-repeat ;
+    background-size: cover
+}
+
+body {
     @apply text-white
 }
 
@@ -32,4 +38,54 @@ body {
 
 .lucide-user {
     color: black;
+}
+
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #555;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #000000;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #242424;
+}
+
+/* SHAKE ANIMATION ON HORIZONTAL DIRECTION */
+.shake {
+    animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) 0.2s both;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+@keyframes shake {
+
+    10%,
+    90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    20%,
+    80% {
+        transform: translate3d(2px, 0, 0);
+    }
+
+    30%,
+    50%,
+    70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+
+    40%,
+    60% {
+        transform: translate3d(4px, 0, 0);
+    }
 }
