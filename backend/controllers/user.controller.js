@@ -21,7 +21,6 @@ export const signup = async (req, res) => {
     username,
     email,
     password,
-    gender,
     avatar: profilePic,
   });
 

@@ -1,6 +1,7 @@
 import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Home, Login, Signup } from "./pages";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const router = createBrowserRouter([
@@ -21,6 +22,7 @@ function App() {
   return (
     <>
         <RouterProvider router={router} />
+        <Toaster />
     </>
   );
 }
