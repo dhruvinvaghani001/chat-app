@@ -1,7 +1,7 @@
 import User from "../models/user.model.js";
 
 export const signup = async (req, res) => {
-  const { username, email, password, gender, confirmpassword } = req.body;
+  const { username, email, password, confirmpassword } = req.body;
 
   if (password !== confirmpassword) {
     return res
@@ -15,15 +15,14 @@ export const signup = async (req, res) => {
     return res.status(400).json({ error: "Username and Email alredy Exist !" });
   }
 
-  const maleProfile = `https://avatar.iran.liara.run/public/boy?username=${username}`;
-  const femaleProfile = `https://avatar.iran.liara.run/public/girl?username=${username}`;
+  const profilePic = `https://avatar.iran.liara.run/public/?username=${username}`;
 
   const newUser = new User({
     username,
     email,
     password,
     gender,
-    avatar: gender === "male" ? maleProfile : femaleProfile,
+    avatar: profilePic,
   });
 
   if (newUser) {

@@ -3,7 +3,7 @@ import { Search } from "lucide-react";
 
 const SearchInput = () => {
   return (
-    <div className="searchbar mt-6  ">
+    <div className="searchbar mt-6  flex-1">
       <div className="search mt-2 p-2 flex justify-start items-center">
         <form className="flex  justify-between w-full ">
           <input
