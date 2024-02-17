@@ -1,28 +1,37 @@
 import "./App.css";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Navigate,
+} from "react-router-dom";
 import { Home, Login, Signup } from "./pages";
 import { Toaster } from "react-hot-toast";
+import { useAutherContext } from "./context/AuthContext";
 
 function App() {
+  const { user } = useAutherContext();
+
+  console.log("user", user);
+
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Home />,
+      element: user == null ? <Navigate to="/login" /> : <Home />,
     },
     {
       path: "/login",
-      element: <Login />,
+      element: user ? <Navigate to="/" /> : <Login />,
     },
     {
       path: "/signup",
-      element: <Signup />,
+      element: user ? <Navigate to="/" /> : <Signup />,
     },
   ]);
 
   return (
     <>
-        <RouterProvider router={router} />
-        <Toaster />
+      <RouterProvider router={router} />
+      <Toaster />
     </>
   );
 }
