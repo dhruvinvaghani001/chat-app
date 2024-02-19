@@ -29,11 +29,11 @@ body {
 }
 
 .user {
-    @apply mt-2 flex p-[20px] rounded-lg bg-slate-700 items-center;
+    @apply mt-2 flex p-[20px] rounded-lg  items-center;
 }
 
 .profile__img {
-    @apply mr-4 bg-white rounded-full p-4 flex justify-center items-center;
+    @apply mr-4  flex justify-center items-center;
 }
 
 .lucide-user {
@@ -42,7 +42,7 @@ body {
 
 
 ::-webkit-scrollbar {
-    width: 8px;
+    width: 4px;
 }
 
 ::-webkit-scrollbar-track {

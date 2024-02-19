@@ -12,7 +12,7 @@ const useLogout = () => {
     try {
       setLoading(true);
 
-      const res = await fetch(`${config.url}/api/user/logout`, {
+      const res = await fetch(`/api/user/logout`, {
         method: "POST",
         headers: { "Content-Type": "application/josn" },
       });
