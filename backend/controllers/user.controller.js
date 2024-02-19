@@ -52,16 +52,21 @@ export const loginUser = async (req, res) => {
   }
 
   const passCheck = await user.isPasswordCorrect(password);
-  console.log("pascheck" + passCheck);
+  // console.log("pascheck" + passCheck);
 
   if (!passCheck) {
     return res.status(400).json({ error: "PassWord is Invalid !" });
   }
   const token = user.genrateToken();
-  console.log("token" + token);
+  // console.log("token" + token);
   res.cookie("token", token);
 
-  return res.status(200).json({ user });
+  return res.status(200).json({
+    email: user.email,
+    username: user.email,
+    avatar: user.avatar,
+    _id: user._id,
+  });
 };
 
 export const logout = async (req, res) => {

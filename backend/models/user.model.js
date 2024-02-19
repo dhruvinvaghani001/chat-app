@@ -30,20 +30,15 @@ userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
     return next();
   }
-  const hash = await bcrypt.hash(this.password, 10)
-  this.password =hash ;
+  const hash = await bcrypt.hash(this.password, 10);
+  this.password = hash;
   next();
 });
 
-
-
-userSchema.methods.isPasswordCorrect = async function(enterpasswod){
-  const check = await bcrypt.compare(enterpasswod,this.password);
+userSchema.methods.isPasswordCorrect = async function (enterpasswod) {
+  const check = await bcrypt.compare(enterpasswod, this.password);
   return check;
-}
-
-
-
+};
 
 userSchema.methods.genrateToken = function () {
   const token = jwt.sign(

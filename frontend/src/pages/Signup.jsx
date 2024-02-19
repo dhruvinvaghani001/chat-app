@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import useSignup from "../hooks/useSignup";
+import { ClipLoader } from "react-spinners";
 
 const Signup = () => {
   const [input, setInput] = useState({
@@ -13,10 +14,10 @@ const Signup = () => {
 
   const { signup, loading } = useSignup();
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(input);
-		await signup(input);
+    await signup(input);
   };
 
   const handleChange = (e) => {
@@ -99,6 +100,7 @@ const Signup = () => {
               className="bg-violet-700 p-2 rounded-lg w-full font-semibold text-xl mt-4"
             >
               Create Account
+              {loading ? <ClipLoader color="white" className="ml-2" /> : <></>}
             </button>
           </form>
         </div>

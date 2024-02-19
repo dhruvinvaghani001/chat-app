@@ -1,7 +1,31 @@
 import React from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import useLogin from "../hooks/useLogin";
+import { ClipLoader } from "react-spinners";
 
 const Login = () => {
+  const [input, setInput] = useState({
+    email: "",
+    username: "",
+    password: "",
+  });
+  const { loading, login } = useLogin();
+
+  const handleChange = (e) => {
+    setInput({ ...input, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(input);
+    await login({
+      email: input.email,
+      username: input.username,
+      password: input.password,
+    });
+  };
+
   return (
     <div className="w-1/4">
       <div className="bg-gray-900 p-12 rounded-lg ">
@@ -9,7 +33,7 @@ const Login = () => {
           <h1 className="text-2xl font-bold">Sign-in To Your Account !</h1>
         </div>
         <div className="content mt-6">
-          <form action="">
+          <form onSubmit={handleSubmit}>
             <div className="form__input ">
               <label htmlFor="username" className="text-xl font-semibold">
                 Username
@@ -19,6 +43,8 @@ const Login = () => {
                 placeholder="Jhon Doe"
                 name="username"
                 className="logininput"
+                onChange={handleChange}
+                value={input.username}
               />
             </div>
             <div className="form__input ">
@@ -28,11 +54,19 @@ const Login = () => {
                 placeholder="jhondoe001@gmail.com"
                 name="email"
                 className="logininput"
+                onChange={handleChange}
+                value={input.email}
               />
             </div>
             <div className="form__input ">
               <label htmlFor="password">Password</label>
-              <input type="password" name="password" className="logininput" />
+              <input
+                type="password"
+                name="password"
+                className="logininput"
+                onChange={handleChange}
+                value={input.password}
+              />
             </div>
             <div className="new-account mt-2">
               <p className="text-lg">
@@ -46,9 +80,10 @@ const Login = () => {
             </div>
             <button
               type="submit"
-              className="bg-violet-700 p-2 rounded-lg w-full font-semibold text-xl mt-4"
+              className="bg-violet-700 p-2 rounded-lg w-full font-semibold text-xl mt-4 flex items-center justify-center"
             >
               Login
+              {loading ? <ClipLoader color="white" className="ml-2" /> : <></>}
             </button>
           </form>
         </div>
