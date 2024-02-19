@@ -13,7 +13,9 @@ const Messages = () => {
 
   return (
     <div className="px-4 flex-1 overflow-auto">
-      {messages.length == 0 ? <>start chattingnow</> : <></>}
+      {messages.length == 0 ? <h1 className="flex justify-center items-center h-full text-bold text-2xl">
+           start chatting now .
+          </h1> : <></>}
       {messages.map((msg) => (
         <div key={msg._id} ref={lastmessageIndex}>
           <Message msg={msg} />

@@ -23,14 +23,14 @@ const MessageInput = () => {
         <div className="flex items-center">
           <input
             type="text"
-            className="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 text-white"
+            className="border rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 text-white text-lg"
             placeholder="Send a message"
             value={message}
             onChange={(e) => setMessages(e.target.value)}
           />
           <button
             type="submit"
-            className="ml-2 bg-gray-700 text-white p-2 rounded-lg"
+            className="ml-2 bg-gray-700 text-white p-3 rounded-lg text-lg"
           >
             Send
           </button>
