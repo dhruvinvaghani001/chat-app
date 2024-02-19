@@ -1,6 +1,6 @@
 import Conversation from "../models/convesation.model.js";
 import Message from "../models/message.model.js";
-import  mongoose  from "mongoose";
+import mongoose from "mongoose";
 
 const sendMessage = async (req, res) => {
   try {
@@ -33,7 +33,7 @@ const sendMessage = async (req, res) => {
 
     await Promise.all([conversation.save(), newMessage.save()]);
 
-    return res.status(201).json({ data: newMessage, conver: conversation });
+    return res.status(201).json({ data: newMessage });
   } catch (error) {
     console.log("send message error :", error);
     res.status(500).json({ error: "niternal server Error :" });
@@ -44,82 +44,14 @@ const getMessages = async (req, res) => {
   const { id: reciverId } = req.params;
   const senderId = req.user?._id;
 
-  const pipeline = [
-    {
-      $match: {
-        participants: {
-          $all: [new mongoose.Types.ObjectId(senderId), new mongoose.Types.ObjectId(reciverId)],
-        },
-      },
-    },
-    {
-      $lookup: {
-        from: "messages",
-        localField: "messages",
-        foreignField: "_id",
-        as: "messages",
-        pipeline: [
-          {
-            $lookup: {
-              from: "users",
-              localField: "sender",
-              foreignField: "_id",
-              as: "sender",
-              pipeline: [
-                {
-                  $project: {
-                    username: 1,
-                    email: 1,
-                    avatar: 1,
-                  },
-                },
-              ],
-            },
-          },
-          {
-            $lookup: {
-              from: "users",
-              localField: "reciver",
-              foreignField: "_id",
-              as: "reciver",
-              pipeline: [
-                {
-                  $project: {
-                    username: 1,
-                    email: 1,
-                    avatar: 1,
-                  },
-                },
-              ],
-            },
-          },
-          {
-            $addFields: {
-              sender: {
-                $first: "$sender",
-              },
-              reciver: {
-                $first: "$reciver",
-              },
-            },
-          },
-        ],
-      },
-    },
-    {
-      $project: {
-        messages: 1,
-      },
-    },
-  ];
+  const conversation = await Conversation.findOne({
+    participants: { $all: [senderId, reciverId] },
+  }).populate("messages");
 
-  const conversation = await Conversation.aggregate(pipeline);
+  if (!conversation) return res.status(200).json([]);
+  const messages = conversation.messages;
 
-  if (conversation.length == 0) {
-    return res.status(200).json({ message: "convesation is empty !" });
-  }
-
-  return res.status(200).json({ conversation });
+  res.status(200).json(messages);
 };
 
 export { sendMessage, getMessages };

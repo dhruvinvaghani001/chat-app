@@ -58,6 +58,10 @@ body {
     background: #242424;
 }
 
+.justify-onlyend{
+    justify-content: end;
+}
+
 /* SHAKE ANIMATION ON HORIZONTAL DIRECTION */
 .shake {
     animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) 0.2s both;
