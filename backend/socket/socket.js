@@ -14,6 +14,10 @@ const io = new Server(server, {
 
 const userSocketMap = {}; //{useId:socketId}
 
+export const getRecieverSocketId = (reciverId) => {
+  return userSocketMap[reciverId];
+};
+
 io.on("connection", (socket) => {
   console.log("connection done", socket.id);
 
@@ -22,7 +26,6 @@ io.on("connection", (socket) => {
   if (userId != "undefined") {
     userSocketMap[userId] = socket.id;
   }
-
 
   //io.emit()  --> to send event to all connected clients
   io.emit("getonlineusers", Object.keys(userSocketMap));

@@ -23,7 +23,7 @@ const Message = ({ msg }) => {
   const profilePick = fromMe ? user.avatar : selectedConversation?.avatar;
   const bubbleBgColor = fromMe ? "bg-blue-500" : "bg-slate-600";
   const dateString = msg.createdAt;
-
+  const shakeClasss = msg.shake ? "shake" : "";
   const date = extractTime(dateString);
 
   return (
@@ -37,7 +37,7 @@ const Message = ({ msg }) => {
           <img src={profilePick} alt="" srcset="" />
         </div>
       </div>
-      <div className={`${bubbleBgColor} p-2 text-xl rounded-lg`}>
+      <div className={`${bubbleBgColor} ${shakeClasss}  p-2 text-xl rounded-lg`}>
         {msg.content}
       </div>
     </div>
