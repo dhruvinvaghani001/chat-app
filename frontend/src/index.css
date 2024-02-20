@@ -33,7 +33,10 @@ body {
 }
 
 .profile__img {
-    @apply mr-4  flex justify-center items-center;
+    @apply mr-4  flex justify-center items-center relative;
+}
+.online-dot{
+    @apply absolute top-[5px] left-[50px] bg-green-600;
 }
 
 .lucide-user {

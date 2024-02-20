@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import connectDB from "./db/index.js";
 import messageRoutes from "./routes/message.route.js";
 import cors from "cors";
+import { app, server } from "./socket/socket.js";
 
 dotenv.config();
 var corsOptions = {
@@ -14,7 +15,7 @@ var corsOptions = {
 
 
 
-const app = express();
+
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded());
@@ -31,7 +32,7 @@ app.use("/api/user", userRoutes);
 app.use("/api/message", messageRoutes);
 
 connectDB().then(() => {
-  app.listen(PORT, () => {
+  server.listen(PORT, () => {
     console.log(`app is running fine! ${PORT}`);
   });
 });
