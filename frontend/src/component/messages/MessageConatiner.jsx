@@ -12,7 +12,7 @@ const MessageConatiner = () => {
   } = useConversation();
 
 
-  console.log(messages);
+  
 
   const isGroup = selectedConversation?.title ? true : null;
 

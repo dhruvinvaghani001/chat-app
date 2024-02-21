@@ -31,14 +31,15 @@ const Message = ({ msg }) => {
 
   return (
     <div
-      className={`flex my-4 items-center gap-4  ${
+      className={`flex my-4  gap-4 items-start ${
         fromMe || checkFomMeInGroup
           ? "justify-onlyend flex-row-reverse"
           : "justify-start"
       }   `}
     >
       <div className="chat-image avatar">
-        <div className="rounded-full w-12">
+        <div className="rounded-full w-12 flex flex-col justify-center items-center ">
+        <span className="text-xl ">{msg.sender?.username}</span>
           {isGroup ? (
             <img src={msg.sender.avatar} alt="" srcset="" />
           ) : (
@@ -47,10 +48,13 @@ const Message = ({ msg }) => {
         </div>
       </div>
       <div
-        className={`${bubbleBgColor} ${shakeClasss}  p-2 text-xl rounded-lg`}
+        className={`${bubbleBgColor} ${shakeClasss}  p-2 text-xl rounded-lg max-w-[500px]`}
+        style={{lineBreak:"anywhere"}}
       >
         {msg.content}
+        
       </div>
+      
     </div>
   );
 };

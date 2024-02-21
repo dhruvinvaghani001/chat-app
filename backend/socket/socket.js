@@ -1,6 +1,7 @@
 import express from "express";
 import http from "http";
 import { Server } from "socket.io";
+import mongoose from "mongoose";
 
 const app = express();
 const server = http.createServer(app);
@@ -16,6 +17,19 @@ const userSocketMap = {}; //{useId:socketId}
 
 export const getRecieverSocketId = (reciverId) => {
   return userSocketMap[reciverId];
+};
+
+export const getGroupMembersScoketId = (participats) => {
+  let userIds = Object.keys(userSocketMap);
+  userIds = userIds.map((userid) => new mongoose.Types.ObjectId(userid));
+
+  const sockets = [];
+  participats.forEach((key) => {
+    if (userSocketMap.hasOwnProperty(key.toString())) {
+      sockets.push(userSocketMap[key]);
+    }
+  });
+  return sockets;
 };
 
 io.on("connection", (socket) => {

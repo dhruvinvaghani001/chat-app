@@ -1,6 +1,11 @@
 import mongoose from "mongoose";
 import Conversation from "../models/convesation.model.js";
 import Message from "../models/message.model.js";
+import {
+  getGroupMembersScoketId,
+  getRecieverSocketId,
+} from "../socket/socket.js";
+import { io } from "../socket/socket.js";
 
 const createGroup = async (req, res) => {
   const userId = req.user._id;
@@ -66,11 +71,25 @@ const sendMessageInGroup = async (req, res) => {
   conversation.messages.push(newMessage._id);
 
   await Promise.all([conversation.save(), newMessage.save()]);
-
   const newmessage = await Message.findById(newMessage._id).populate({
     path: "sender",
     select: "username avatar",
   });
+
+  const participants = conversation.participants.map((id) => id != userId);
+
+  const reciverSocketIds = getGroupMembersScoketId(participants);
+  console.log(reciverSocketIds);
+
+  if (reciverSocketIds) {
+    //io.to(<socket.id>).emit("")  to is used to send particular client
+    reciverSocketIds.forEach((socket) => {
+      io.to(socket).emit("new-message", {
+        conversation,
+        newMessage: newmessage,
+      });
+    });
+  }
 
   return res.status(200).json({ data: newmessage });
 };
