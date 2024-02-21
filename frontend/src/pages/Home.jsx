@@ -5,7 +5,7 @@ import MessageConatiner from "../component/messages/MessageConatiner";
 
 const Home = () => {
   return (
-    <div className="bg-gray-800 w-1/2 rounded-xl flex">
+    <div className="bg-gray-800 w-full h-full rounded-xl flex">
       <SideBar />
       <MessageConatiner />
     </div>

@@ -3,14 +3,14 @@ import { User } from "lucide-react";
 import useConversation from "../../zustand/useConversation";
 import { useSocketContext } from "../../context/SocketContext";
 
-const SingleUser = ({ conversation }) => {
+const SingleUser = ({ conversation  }) => {
   const { selectedConversation, setSelectedConversation } = useConversation();
 
   const isSelected = selectedConversation?._id == conversation._id;
   const { onlineUsers } = useSocketContext();
-  console.log(onlineUsers);
   const onlineCheck = onlineUsers.includes(conversation._id);
   
+  console.log(selectedConversation);
   return (
     <div
       className={`user transition   ease-out hover:bg-blue-400 ${

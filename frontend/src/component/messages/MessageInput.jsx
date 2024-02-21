@@ -6,6 +6,7 @@ import useSendMessages from "../../hooks/useSendMessagees";
 const MessageInput = () => {
   const [message, setMessages] = useState();
   const { loading, send } = useSendMessages();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(message);

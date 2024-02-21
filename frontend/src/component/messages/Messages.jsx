@@ -4,12 +4,16 @@ import useConversation from "../../zustand/useConversation";
 import useGetMessages from "../../hooks/useGetMessages";
 import useListenMessages from "../../hooks/useListenMessage";
 
+
 const Messages = () => {
   const { messages, loading } = useGetMessages();
   const lastmessageIndex = useRef(null);
+  const {selectedConversation} = useConversation();
+
+  const isGroup = selectedConversation?.title ? true : null;
 
   useListenMessages();
-
+  
   useEffect(() => {
     lastmessageIndex.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);

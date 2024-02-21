@@ -26,18 +26,29 @@ const Message = ({ msg }) => {
   const shakeClasss = msg.shake ? "shake" : "";
   const date = extractTime(dateString);
 
+  const isGroup = selectedConversation?.title ? true : null;
+  const checkFomMeInGroup = msg.sender._id == user._id;
+
   return (
     <div
       className={`flex my-4 items-center gap-4  ${
-        fromMe ? "justify-onlyend flex-row-reverse" : "justify-start"
+        fromMe || checkFomMeInGroup
+          ? "justify-onlyend flex-row-reverse"
+          : "justify-start"
       }   `}
     >
       <div className="chat-image avatar">
         <div className="rounded-full w-12">
-          <img src={profilePick} alt="" srcset="" />
+          {isGroup ? (
+            <img src={msg.sender.avatar} alt="" srcset="" />
+          ) : (
+            <img src={profilePick} alt="" srcset="" />
+          )}
         </div>
       </div>
-      <div className={`${bubbleBgColor} ${shakeClasss}  p-2 text-xl rounded-lg`}>
+      <div
+        className={`${bubbleBgColor} ${shakeClasss}  p-2 text-xl rounded-lg`}
+      >
         {msg.content}
       </div>
     </div>

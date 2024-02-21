@@ -6,7 +6,7 @@ import Logout from "./Logout";
 
 const SideBar = () => {
   return (
-    <div className="left w-1/4 h-[700px] overflow-y-scroll border-r border-slate-500 relative flex flex-col">
+    <div className="left w-1/4  overflow-y-scroll border-r border-slate-500 relative flex flex-col">
       <div className="sticky top-0">
         <SearchInput />
       </div>

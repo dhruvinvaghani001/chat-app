@@ -11,19 +11,24 @@ const MessageConatiner = () => {
     setSelectedConversation,
   } = useConversation();
 
+
+  console.log(messages);
+
+  const isGroup = selectedConversation?.title ? true : null;
+
   useEffect(() => {
     return () => {
       setSelectedConversation(null);
     };
-  }, [setSelectedConversation]);
+  }, [setSelectedConversation._id]);
 
   return (
-    <div className="right w-3/4 h-[700px] overflow-auto relative flex flex-col">
+    <div className="right w-3/4 overflow-auto relative flex flex-col">
       {selectedConversation && (
         <div className="bg-slate-500 px-4 py-2 mb-2">
           <span className="label-text">To:</span>{" "}
           <span className="text-gray-900 font-bold">
-            {selectedConversation?.username}
+            {isGroup ? selectedConversation?.title :selectedConversation?.username }
           </span>{" "}
         </div>
       )}
