@@ -76,10 +76,9 @@ const sendMessageInGroup = async (req, res) => {
     select: "username avatar",
   });
 
-  const participants = conversation.participants.map((id) => id != userId);
+  const participants = conversation.participants.filter((id) => id != userId);
 
   const reciverSocketIds = getGroupMembersScoketId(participants);
-  console.log(reciverSocketIds);
 
   if (reciverSocketIds) {
     //io.to(<socket.id>).emit("")  to is used to send particular client
