@@ -83,7 +83,7 @@ const sendMessageInGroup = async (req, res) => {
   if (reciverSocketIds) {
     //io.to(<socket.id>).emit("")  to is used to send particular client
     reciverSocketIds.forEach((socket) => {
-      io.to(socket).emit("new-message", {
+      io.to(socket).emit("new-message-gp", {
         conversation,
         newMessage: newmessage,
       });

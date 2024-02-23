@@ -12,8 +12,13 @@ const useListenMessages = () => {
 
   useEffect(() => {
     if (isGroup) {
-      socket?.on("new-message", ({ conversation, newMessage }) => {
-      
+      socket?.on("new-message-gp", ({ conversation, newMessage }) => {
+        console.log("conversation")
+        console.log(conversation);
+        console.log("new message");
+        console.log(newMessage);
+        console.log("Selcted conversaiotn");
+        console.log(selectedConversation);
         const part = conversation.participants.filter(
           (user) => user != user._id
         );
@@ -44,7 +49,7 @@ const useListenMessages = () => {
     return () => {
       socket?.off("new-message");
     };
-  }, [socket, messages, setMessages]);
+  }, [socket, messages, setMessages,selectedConversation]);
 };
 
 export default useListenMessages;
