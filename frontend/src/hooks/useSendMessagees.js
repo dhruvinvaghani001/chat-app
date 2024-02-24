@@ -1,17 +1,17 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import useConversation from "../zustand/useConversation";
+import { useSocketContext } from "../context/SocketContext";
 
 const useSendMessages = () => {
   const [loading, setLoading] = useState();
 
   const { selectedConversation, messages, setMessages } = useConversation();
   const isGroup = selectedConversation?.title ? true : null;
-  
+  const { socket } = useSocketContext();
+
   const send = async (message) => {
     if (isGroup) {
-      // console.log("group chat ");
-      // console.log(selectedConversation);
       const id = selectedConversation._id;
       try {
         setLoading(true);
@@ -43,13 +43,17 @@ const useSendMessages = () => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ content: message }),
         });
-        
+
         const data = await res.json();
 
         if (data.error) {
           throw new Error(data.error);
         }
-
+        socket.emit("join-chat", selectedConversation._id);
+        socket.emit("send-message", {
+          newMessage: data.data,
+          conversation: selectedConversation,
+        });
         setMessages([...messages, data.data]);
       } catch (error) {
         toast.error(error.message);

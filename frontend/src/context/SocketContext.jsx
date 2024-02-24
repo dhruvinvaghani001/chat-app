@@ -24,7 +24,7 @@ export const SocketContextProvider = ({ children }) => {
         },
       });
       setSocket(socket);
-
+      socket.emit('setup',user);
       socket.on("getonlineusers", (users) => {
         setOnlineUsers(users);
       });

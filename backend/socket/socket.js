@@ -35,6 +35,27 @@ export const getGroupMembersScoketId = (participats) => {
 io.on("connection", (socket) => {
   console.log("connection done", socket.id);
 
+  socket.on("setup", (user) => {
+    console.log("connectin gin socket room :", user._id);
+    socket.join(user._id);
+  });
+
+  socket.on("join-chat", (room) => {
+    console.log("joininng in room :", room);
+    socket.join(room);
+  });
+
+  socket.on("send-message", ({ conversation, newMessage }) => {
+    console.log(conversation);
+    console.log(newMessage);
+    socket.in(conversation._id).emit("message-recived", newMessage);
+    // if(conversation.hasOwnProperty("participants")){
+    //   conversation.participats.forEach((parrticipants)=>{
+    //     socket.in()
+    //   })
+    // }
+  });
+
   const userId = socket.handshake.query.userId;
 
   if (userId != "undefined") {
