@@ -3,17 +3,22 @@ import Message from "./Message";
 import useConversation from "../../zustand/useConversation";
 import useGetMessages from "../../hooks/useGetMessages";
 import useListenMessages from "../../hooks/useListenMessage";
-
+import { useSocketContext } from "../../context/SocketContext";
 
 const Messages = () => {
   const { messages, loading } = useGetMessages();
   const lastmessageIndex = useRef(null);
-  const {selectedConversation} = useConversation();
-
+  const { selectedConversation } = useConversation();
+  const { socket } = useSocketContext();
   const isGroup = selectedConversation?.title ? true : null;
 
   useListenMessages();
-  
+  // useEffect(() => {
+  //   socket?.on("message-recived", (newMessage) => {
+  //     console.log("NEW MESSAGE ON CLIENT : ", newMessage);
+  //   });
+  // }, [socket, selectedConversation]);
+
   useEffect(() => {
     lastmessageIndex.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);

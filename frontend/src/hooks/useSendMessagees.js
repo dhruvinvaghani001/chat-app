@@ -7,59 +7,28 @@ const useSendMessages = () => {
   const [loading, setLoading] = useState();
 
   const { selectedConversation, messages, setMessages } = useConversation();
-  const isGroup = selectedConversation?.title ? true : null;
   const { socket } = useSocketContext();
 
   const send = async (message) => {
-    if (isGroup) {
-      const id = selectedConversation._id;
-      try {
-        setLoading(true);
-        const res = await fetch(`/api/group/send/${id}`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ content: message }),
-        });
-        console.log(res);
-        const data = await res.json();
+    const id = selectedConversation._id;
+    try {
+      setLoading(true);
+      const res = await fetch(`/api/group/send/${id}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ content: message }),
+      });
+      console.log(res);
+      const data = await res.json();
 
-        if (data.error) {
-          throw new Error(data.error);
-        }
-
-        setMessages([...messages, data.data]);
-      } catch (error) {
-        toast.error(error.message);
-      } finally {
-        setLoading(false);
+      if (data.error) {
+        throw new Error(data.error);
       }
-    } else {
-      const id = selectedConversation._id;
-
-      try {
-        setLoading(true);
-        const res = await fetch(`/api/message/send-message/${id}`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ content: message }),
-        });
-
-        const data = await res.json();
-
-        if (data.error) {
-          throw new Error(data.error);
-        }
-        socket.emit("join-chat", selectedConversation._id);
-        socket.emit("send-message", {
-          newMessage: data.data,
-          conversation: selectedConversation,
-        });
-        setMessages([...messages, data.data]);
-      } catch (error) {
-        toast.error(error.message);
-      } finally {
-        setLoading(false);
-      }
+      setMessages([...messages, data.data]);
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 

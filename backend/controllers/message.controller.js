@@ -14,13 +14,11 @@ const sendMessage = async (req, res) => {
 
     let conversation = await Conversation.findOne({
       participants: { $all: [senderId, receiverId] },
-      type:"oneone"
     });
 
     if (!conversation) {
       conversation = await Conversation.create({
         participants: [senderId, receiverId],
-        type: "oneone",
       });
     }
 
@@ -40,7 +38,7 @@ const sendMessage = async (req, res) => {
 
     if (reciverSocketId) {
       //io.to(<socket.id>).emit("")  to is used to send particular client
-      
+
       io.to(reciverSocketId).emit("new-message", { conversation, newMessage });
     }
 
@@ -57,7 +55,6 @@ const getMessages = async (req, res) => {
 
   const conversation = await Conversation.findOne({
     participants: { $all: [senderId, id] },
-    type:"oneone"
   }).populate("messages");
 
   if (!conversation) return res.status(200).json([]);

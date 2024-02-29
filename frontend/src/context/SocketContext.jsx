@@ -20,11 +20,11 @@ export const SocketContextProvider = ({ children }) => {
     if (user) {
       const socket = io("http://localhost:5000", {
         query: {
-          userId: user._id,
+          user,
         },
       });
       setSocket(socket);
-      socket.emit('setup',user);
+
       socket.on("getonlineusers", (users) => {
         setOnlineUsers(users);
       });

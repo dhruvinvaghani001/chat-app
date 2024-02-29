@@ -8,11 +8,16 @@ import { Home, Login, Signup } from "./pages";
 import { Toaster } from "react-hot-toast";
 import { useAutherContext } from "./context/AuthContext";
 import useConversation from "./zustand/useConversation";
+import { useSocketContext } from "./context/SocketContext";
+import { useEffect } from "react";
 
 function App() {
   const { user } = useAutherContext();
-
-  console.log("user", user);
+  const { socket } = useSocketContext();
+  // console.log("user", user);
+  useEffect(() => {
+    socket?.emit("setup", user);
+  }, [socket]);
 
   const router = createBrowserRouter([
     {
@@ -28,9 +33,6 @@ function App() {
       element: user ? <Navigate to="/" /> : <Signup />,
     },
   ]);
-  const { selectedConversation } = useConversation();
-  console.log("hello");
-  console.log(selectedConversation);
   return (
     <>
       <RouterProvider router={router} />
