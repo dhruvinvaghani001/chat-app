@@ -3,21 +3,13 @@ import { Search } from "lucide-react";
 import toast from "react-hot-toast";
 import useConversation from "../../zustand/useConversation";
 import useGetConversation from "../../hooks/useGetConversation";
-import { Dialog, Transition } from "@headlessui/react";
-import { Fragment } from "react";
-import CreateGroupModal from "./CreateGroupModal";
+
 
 const SearchInput = () => {
   const [search, setSearch] = useState();
-  let [isOpen, setIsOpen] = useState(false);
+ 
 
-  function closeModal() {
-    setIsOpen(false);
-  }
-
-  function openModal() {
-    setIsOpen(true);
-  }
+  
 
   const { setSelectedConversation } = useConversation();
   const { conversation } = useGetConversation();
@@ -58,14 +50,7 @@ const SearchInput = () => {
           </button>
         </form>
       </div>
-      <button
-        type="button"
-        onClick={openModal}
-        className="rounded-md bg-black/20 px-4 py-2 text-sm font-medium text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75"
-      >
-        Open dialog
-      </button>
-      <CreateGroupModal isOpen={isOpen} closeModal={closeModal} />
+    
     </div>
   );
 };

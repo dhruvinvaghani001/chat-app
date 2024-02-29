@@ -26,7 +26,7 @@ const Message = ({ msg }) => {
   const shakeClasss = msg.shake ? "shake" : "";
   const date = extractTime(dateString);
 
-  const isGroup = selectedConversation?.title ? true : null;
+  
   const checkFomMeInGroup = msg.sender._id == user._id;
 
   return (
@@ -40,11 +40,7 @@ const Message = ({ msg }) => {
       <div className="chat-image avatar">
         <div className="rounded-full w-12 flex flex-col justify-center items-center ">
         <span className="text-xl ">{msg.sender?.username}</span>
-          {isGroup ? (
-            <img src={msg.sender.avatar} alt="" srcset="" />
-          ) : (
-            <img src={profilePick} alt="" srcset="" />
-          )}
+          
         </div>
       </div>
       <div

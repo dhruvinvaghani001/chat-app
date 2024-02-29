@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import Messages from "./Messages";
 import MessageInput from "./MessageInput";
 import useConversation from "../../zustand/useConversation";
+import { useAutherContext } from "../../context/AuthContext";
 
 const MessageConatiner = () => {
   const {
@@ -11,11 +12,7 @@ const MessageConatiner = () => {
     setSelectedConversation,
   } = useConversation();
 
-
-  
-
-  const isGroup = selectedConversation?.title ? true : null;
-
+  const { user } = useAutherContext();
   useEffect(() => {
     return () => {
       setSelectedConversation(null);
@@ -25,11 +22,16 @@ const MessageConatiner = () => {
   return (
     <div className="right w-3/4 overflow-auto relative flex flex-col">
       {selectedConversation && (
-        <div className="bg-slate-500 px-4 py-2 mb-2">
-          <span className="label-text">To:</span>{" "}
-          <span className="text-gray-900 font-bold">
-            {isGroup ? selectedConversation?.title :selectedConversation?.username }
-          </span>{" "}
+        <div className="bg-slate-500 px-4 py-2 mb-2 flex justify-between">
+          <div>
+            <span className="label-text">To:</span>{" "}
+            <span className="text-gray-900 font-bold">
+              {selectedConversation.username}
+            </span>{" "}
+          </div>
+          <div>
+            <img src={selectedConversation?.avatar} className="w-[40px]" />
+          </div>
         </div>
       )}
       <div className="flex-1 overflow-auto">

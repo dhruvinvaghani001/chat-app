@@ -20,12 +20,14 @@ export const SocketContextProvider = ({ children }) => {
     if (user) {
       const socket = io("http://localhost:5000", {
         query: {
-          user,
+          userId :  user._id,
         },
       });
       setSocket(socket);
 
       socket.on("getonlineusers", (users) => {
+        console.log("hello online");
+        console.log(users);
         setOnlineUsers(users);
       });
 

@@ -8,7 +8,7 @@ const Logout = () => {
 
   const handleLogout = () => {
     logout()
-  };
+  };  
 
   const {user} = useAutherContext(); 
   console.log(user);  
