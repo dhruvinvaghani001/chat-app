@@ -6,6 +6,7 @@ import connectDB from "./db/index.js";
 import messageRoutes from "./routes/message.route.js";
 import cors from "cors";
 import { app, server } from "./socket/socket.js";
+import path from "path";
 
 dotenv.config();
 var corsOptions = {
