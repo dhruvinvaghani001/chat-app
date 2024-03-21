@@ -14,6 +14,8 @@ var corsOptions = {
   optionsSuccessStatus: 200,
 };
 
+const __dirname = path.resolve();
+
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded());
