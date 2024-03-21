@@ -1,4 +1,5 @@
 import User from "../models/user.model.js";
+import { getAuth } from "firebase-admin/auth";
 
 export const signup = async (req, res) => {
   const { username, email, password, confirmpassword } = req.body;
@@ -66,7 +67,7 @@ export const loginUser = async (req, res) => {
     username: user.email,
     avatar: user.avatar,
     _id: user._id,
-    token:token
+    token: token,
   });
 };
 
@@ -92,4 +93,50 @@ export const getAllusers = async (req, res) => {
     console.log("error while getting all user:", error);
     res.status(500).json({ error: "intenal server error!" });
   }
+};
+
+export const googleSignIn = async (req, res) => {
+  let { accessToken } = req.body;
+
+  getAuth()
+    .verifyIdToken(accessToken)
+    .then(async (decodedUser) => {
+      // console.log(decodedUser)
+      let { email, username, avatar } = decodedUser;
+      let user = null;
+      try {
+        user = await User.findOne(email).select("-password");
+      } catch (error) {
+        return res.status(500).json({ error: error.message });
+      }
+
+      if (user) {
+        if (!user.google_auth) {
+          // login
+          return res.status(403).json({
+            error:
+              "This email was not signed up with Google. Please log in using email and password.",
+          });
+        }
+      } else {
+        // signup
+        user = new User({
+          fullname,
+          email,
+          avatar: "",
+          username: email,
+          isGoogleSignin: true,
+        });
+
+        await user
+          .save()
+          .then((u) => {
+            user = u;
+          })
+          .catch((e) => res.status(500).json({ error: e.message }));
+      }
+
+      return res.status(200).json(user);
+    })
+    .catch((err) => res.status(500).json({ error: err.message }));
 };
